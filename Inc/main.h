@@ -59,7 +59,7 @@
 
 /* Private define ------------------------------------------------------------*/
 
-#define Led_Pin GPIO_PIN_9
+#define Led_Pin GPIO_PIN_13
 #define Led_GPIO_Port GPIOC
 
 /* ########################## Assert Selection ############################## */
