@@ -52,10 +52,10 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"
-#include "cmsis_os.h"
+#include "../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */     
+/* USER CODE BEGIN Includes */
 #include "gpio.h"
 /* USER CODE END Includes */
 
@@ -78,14 +78,14 @@
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
-osThreadId defaultTaskHandle;
+osThreadId HeartBeatHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-   
+
 /* USER CODE END FunctionPrototypes */
 
-void HeartBeat_Task(void const * argument);
+void HeartBeatTask(void const *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -94,60 +94,61 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
   * @param  None
   * @retval None
   */
-void MX_FREERTOS_Init(void) {
-  /* USER CODE BEGIN Init */
-       
-  /* USER CODE END Init */
+void MX_FREERTOS_Init(void)
+{
+	/* USER CODE BEGIN Init */
 
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
+	/* USER CODE END Init */
 
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
+	/* USER CODE BEGIN RTOS_MUTEX */
+	/* add mutexes, ... */
+	/* USER CODE END RTOS_MUTEX */
 
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
+	/* USER CODE BEGIN RTOS_SEMAPHORES */
+	/* add semaphores, ... */
+	/* USER CODE END RTOS_SEMAPHORES */
 
-  /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, HeartBeat_Task, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+	/* USER CODE BEGIN RTOS_TIMERS */
+	/* start timers, add new ones, ... */
+	/* USER CODE END RTOS_TIMERS */
 
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
-  /* USER CODE END RTOS_THREADS */
+	/* Create the thread(s) */
+	/* definition and creation of HeartBeat */
+	osThreadDef(HeartBeat, HeartBeatTask, osPriorityNormal, 0, 128);
+	HeartBeatHandle = osThreadCreate(osThread(HeartBeat), NULL);
 
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
+	/* USER CODE BEGIN RTOS_THREADS */
+	/* add threads, ... */
+	/* USER CODE END RTOS_THREADS */
+
+	/* USER CODE BEGIN RTOS_QUEUES */
+	/* add queues, ... */
+	/* USER CODE END RTOS_QUEUES */
 }
 
-/* USER CODE BEGIN Header_HeartBeat_Task */
+/* USER CODE BEGIN Header_HeartBeatTask */
 /**
-  * @brief  Function implementing the defaultTask thread.
+  * @brief  Function implementing the HeartBeat thread.
   * @param  argument: Not used 
   * @retval None
   */
-/* USER CODE END Header_HeartBeat_Task */
-void HeartBeat_Task(void const * argument)
+/* USER CODE END Header_HeartBeatTask */
+void HeartBeatTask(void const *argument)
 {
 
-  /* USER CODE BEGIN HeartBeat_Task */
-  /* Infinite loop */
-  for(;;)
-  {
-    HAL_GPIO_TogglePin(Led_GPIO_Port,Led_Pin);
-    osDelay(1000);
-  }
-  /* USER CODE END HeartBeat_Task */
+	/* USER CODE BEGIN HeartBeatTask */
+	/* Infinite loop */
+	for (;;)
+	{
+		HAL_GPIO_TogglePin(Led_GPIO_Port, Led_Pin);
+		osDelay(500);
+	}
+	/* USER CODE END HeartBeatTask */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-     
+
 /* USER CODE END Application */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
